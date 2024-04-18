@@ -6,10 +6,13 @@ import l3.tpjeudelavie.Visiteur.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class JeuDeLaVieUI extends JPanel implements Observateur {
     private final JeuDeLaVie jeu;
@@ -30,12 +33,15 @@ public class JeuDeLaVieUI extends JPanel implements Observateur {
         infoPanel.add(infoLabel);
         try {
             InputStream is = getClass().getResourceAsStream("/Font/Miology.otf");
+            if (is == null) {
+                throw new FileNotFoundException("Le fichier de police n'a pas été trouvé");
+            }
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(50f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
             infoLabel.setFont(customFont);
         } catch (IOException | FontFormatException e) {
-            e.printStackTrace();
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Erreur de chargement de la police", e);
         }
         this.add(infoPanel, BorderLayout.NORTH);
 
