@@ -3,7 +3,7 @@ name: Release Workflow
 on:
   push:
     branches:
-      - main  # Déclenche le workflow lorsqu'un push est effectué sur la branche principale (ou la branche que vous utilisez)
+      - master  # Déclenche le workflow lorsqu'un push est effectué sur la branche principale (ou la branche que vous utilisez)
 
 jobs:
   release:
