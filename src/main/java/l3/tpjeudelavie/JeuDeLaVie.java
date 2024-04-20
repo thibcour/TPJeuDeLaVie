@@ -17,7 +17,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class JeuDeLaVie implements Observable {
-    boolean running = true;
+    public boolean running = true;
     private final List<Observateur> observateurs;
     private final List<Commande> commandes;
     private Visiteur visiteur;
@@ -88,10 +88,19 @@ public class JeuDeLaVie implements Observable {
 
 
     public Cellule getGrilleXY(int x, int y){
-        if(x>=0 && x<this.xMax && y>=0 && y<this.yMax){
-            return grille[x][y];
+        if(x < 0) {
+            x = this.xMax - 1;
+        } else if(x >= this.xMax) {
+            x = 0;
         }
-        return null;
+
+        if(y < 0) {
+            y = this.yMax - 1;
+        } else if(y >= this.yMax) {
+            y = 0;
+        }
+
+        return grille[x][y];
     }
 
     @Override

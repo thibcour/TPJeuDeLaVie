@@ -59,3 +59,9 @@
 .button-gray:hover {
     -fx-background-color: #606060; /* Couleur grise plus foncée au survol */
 }
+
+.subtitle3 {
+    -fx-font-family: 'Miology';
+    -fx-font-size: 40px;
+    -fx-text-fill: #917c7c;
+}
