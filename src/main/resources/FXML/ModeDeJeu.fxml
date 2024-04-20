@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="l3.tpjeudelavie.Controller.ModeDeJeu">
+
+    <top>
+        <VBox alignment="CENTER" spacing="20.0">
+            <Region minHeight="50" />
+            <Label styleClass="title" text="Jeu De La Vie" />
+            <Label styleClass="subtitle" text="Thibault Courcol" />
+            <Label styleClass="subtitle2" text="Mode De Jeu" />
+        </VBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20.0">
+            <HBox alignment="CENTER">
+                <Button fx:id="buttonClassique" minHeight="50" minWidth="200" onAction="#handlePlay" text="Classique" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button fx:id="buttonDayNight" minHeight="50" minWidth="200" onAction="#handlePlay" text="DayNight" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button fx:id="buttonHighLife" minHeight="50" minWidth="200" onAction="#handlePlay" text="HighLife" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button fx:id="buttonModeCanon" minHeight="50" minWidth="200" onAction="#handlePlay" text="ModeCanon" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button fx:id="RetourButton" styleClass="button-gray" minHeight="50" minWidth="200" onAction="#ButtonActionRetour" text="Retour" />            </HBox>
+            <Region minHeight="50" />
+        </VBox>
+    </center>
+
+</BorderPane>

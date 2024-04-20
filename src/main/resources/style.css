@@ -1,0 +1,61 @@
+@font-face {
+    font-family: 'Miology';
+    src: url('Font/Miology.otf');
+}
+
+.root {
+    -fx-background-image: url('images/background.jpg');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.title {
+    -fx-font-family: 'Miology';
+    -fx-font-size: 75px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.subtitle {
+    -fx-font-family: 'Miology';
+    -fx-font-size: 50px;
+    -fx-text-fill: #000000;
+}
+
+.button {
+    -fx-background-color: #007BFF;
+    -fx-text-fill: #ffffff;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-padding: 10px 20px;
+    -fx-min-width: 250px;
+    -fx-min-height: 60px;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px; /* Augmentation de la taille du texte */
+}
+
+.button:hover {
+    -fx-background-color: #0056b3;
+}
+
+.subtitle2 {
+    -fx-font-family: 'Miology';
+    -fx-font-size: 40px;
+    -fx-text-fill: #dcd7d7;
+}
+
+.button-gray {
+    -fx-background-color: #808080; /* Couleur grise */
+    -fx-text-fill: #ffffff;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-padding: 10px 20px;
+    -fx-min-width: 250px;
+    -fx-min-height: 60px;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+.button-gray:hover {
+    -fx-background-color: #606060; /* Couleur grise plus foncée au survol */
+}
