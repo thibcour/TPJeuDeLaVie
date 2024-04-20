@@ -27,6 +27,8 @@ public class JeuDeLaVie implements Observable {
     private int delay = 70;
     private ScheduledExecutorService executor;
     private double density = 0.5;
+    private ScheduledExecutorService executorService;
+
     public JeuDeLaVie(int xMax, int yMax){
         this.xMax = xMax;
         this.yMax = yMax;
@@ -88,18 +90,9 @@ public class JeuDeLaVie implements Observable {
 
 
     public Cellule getGrilleXY(int x, int y){
-        if(x < 0) {
-            x = this.xMax - 1;
-        } else if(x >= this.xMax) {
-            x = 0;
+        if(x < 0 || x >= this.xMax || y < 0 || y >= this.yMax) {
+            return null;
         }
-
-        if(y < 0) {
-            y = this.yMax - 1;
-        } else if(y >= this.yMax) {
-            y = 0;
-        }
-
         return grille[x][y];
     }
 
@@ -149,10 +142,12 @@ public class JeuDeLaVie implements Observable {
 
     public void start() {
         this.running = true;
+        restartExecutor();
     }
 
     public void pause() {
         this.running = false;
+        System.out.println("Pause");
     }
 
     public synchronized void restart() {
