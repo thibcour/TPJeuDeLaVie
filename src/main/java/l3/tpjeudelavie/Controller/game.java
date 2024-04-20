@@ -54,28 +54,35 @@ public class game {
         ObservateurStats stats = stats = new ObservateurStats(jeu, this);
         jeu.attacheObservateur(stats);
 
-        // Créer un ScheduledExecutorService pour actualiser le jeu à intervalles réguliers
+        Runnable gameUpdateTask = new Runnable() {
+            @Override
+            public void run() {
+                jeu.calculerGenerationSuivante();
+                jeuUI.draw();
+            }
+        };
+
+
+        // Schedule the initial game update task
         executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.scheduleAtFixedRate(() -> {
-            jeu.calculerGenerationSuivante();
-            jeuUI.draw();
-        }, 0, 70, TimeUnit.MILLISECONDS); // Actualiser le jeu toutes les 70 millisecondes
+        executorService.scheduleAtFixedRate(gameUpdateTask, 0, 70, TimeUnit.MILLISECONDS);
 
-        // Ajouter un écouteur à la propriété onCloseRequest de la scène
-        Platform.runLater(() -> {
-            gameCanvas.getScene().getWindow().setOnCloseRequest(event -> {
-                stop();
-            });
-        });
-
-        // Mettre à jour les labels avec les informations de génération et le nombre de cellules vivantes
-        generationLabel.setText("Generation n°" + stats.num_generation);
-        cellCountLabel.setText("Nombre de cellules vivantes : " + stats.compterCellulesVivantes());
-
+        // Add a listener to the slider value
         speedSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            jeu.setDelay(newValue.intValue());
+            // Stop the current game update task
+            if (executorService != null) {
+                executorService.shutdownNow();
+            }
+
+            // Schedule a new game update task with the updated delay
+            executorService = Executors.newSingleThreadScheduledExecutor();
+            executorService.scheduleAtFixedRate(gameUpdateTask, 0, newValue.longValue(), TimeUnit.MILLISECONDS);
+
+            // Update the speed label
             speedLabel.setText("Vitesse : " + newValue.intValue() + " ms");
         });
+
+
 
     }
 

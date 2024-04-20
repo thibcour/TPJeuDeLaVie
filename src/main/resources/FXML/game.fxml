@@ -28,7 +28,7 @@
             <Button fx:id="pauseButton" minHeight="50" minWidth="200" onAction="#handlePauseButtonAction" text="Pause" />
             <Button fx:id="resetButton" minHeight="50" minWidth="200" onAction="#handleResetButtonAction" text="Reset" />
             <Slider fx:id="speedSlider" min="10" max="200" value="70" />
-            <Label fx:id="speedLabel" />
+            <Label fx:id="speedLabel" styleClass="subtitle3"/>
             <Button fx:id="quitButton" minHeight="50" minWidth="200" onAction="#handleQuitButtonAction" text="Quitter" />
         </HBox>
     </bottom>
