@@ -26,11 +26,12 @@ public class JeuDeLaVie implements Observable {
     private final int yMax;
     private final int delay = 70;
     private ScheduledExecutorService executor;
-
+    private final String mode;
 
     public JeuDeLaVie(int xMax, int yMax, String mode){
         this.xMax = xMax;
         this.yMax = yMax;
+        this.mode = mode; // Ajoutez cette ligne pour stocker le mode
         this.visiteur = new VisiteurClassique(this);
         observateurs = new ArrayList<>();
         commandes = new ArrayList<>();
@@ -74,6 +75,10 @@ public class JeuDeLaVie implements Observable {
 
     public int getYMax(){
         return this.yMax;
+    }
+
+    public String getMode() {
+        return this.mode;
     }
 
     public void initializeGrilleModeLibre(){

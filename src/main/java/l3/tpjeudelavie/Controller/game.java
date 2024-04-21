@@ -8,6 +8,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import l3.tpjeudelavie.AppContext;
 import l3.tpjeudelavie.JeuDeLaVie;
 import l3.tpjeudelavie.JeuDeLaVieUI;
@@ -24,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 
 @Controller
 public class game {
+    public Pane canvasContainer;
     private Point lastDragPoint;
     public Button pauseButton;
     public Button resetButton;
@@ -50,7 +53,8 @@ public class game {
     public JeuDeLaVie jeu;
 
     private JeuDeLaVieUI jeuUI;
-
+    @FXML
+    private BorderPane borderPane;
     public void updateLabels() {
         Platform.runLater(() -> {
             generationLabel.setText("Generation n°" + ObservateurStats.num_generation);
@@ -60,6 +64,8 @@ public class game {
 
     public void initialize() {
         System.out.println("Initialisation du contrôleur");
+        gameCanvas.widthProperty().bind(borderPane.widthProperty());
+        gameCanvas.heightProperty().bind(borderPane.heightProperty());
         this.jeu = AppContext.getJeuDeLaVie();
         jeuUI = new JeuDeLaVieUI(jeu, gameCanvas, this);
         ObservateurStats stats = new ObservateurStats(jeu, this);
@@ -136,7 +142,21 @@ public class game {
     }
 
     public void handleResetButtonAction(ActionEvent actionEvent) {
-        jeu.initializeGrille();
+        String currentMode = AppContext.getJeuDeLaVie().getMode(); // Ajoutez cette ligne pour obtenir le mode actuel
+        switch (currentMode) {
+            case "Gosper Glider Gun":
+                jeu.initializeGrilleWithCanons();
+                break;
+            case "Pulsar":
+                jeu.initializeGrilleWithPulsar();
+                break;
+            case "Mode Libre":
+                jeu.initializeGrilleModeLibre();
+                break;
+            default:
+                jeu.initializeGrille();
+                break;
+        }
         jeuUI.draw();
         ObservateurStats.reset();
         updateLabels();
