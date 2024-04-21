@@ -144,6 +144,9 @@ public class game {
     public void handleResetButtonAction(ActionEvent actionEvent) {
         String currentMode = AppContext.getJeuDeLaVie().getMode(); // Ajoutez cette ligne pour obtenir le mode actuel
         switch (currentMode) {
+            case  "Puffeur":
+                jeu.initializeGrilleWithPuffer();
+                break;
             case "Gosper Glider Gun":
                 jeu.initializeGrilleWithCanons();
                 break;

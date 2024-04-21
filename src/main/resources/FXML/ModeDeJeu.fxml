@@ -31,7 +31,12 @@
             <HBox alignment="CENTER">
                 <Button fx:id="buttonModePulsar" minHeight="50" minWidth="200" onAction="#handlePlay" text="ModePulsar" />
             </HBox>
-            <Button fx:id="modeLibreButton" minHeight="50" minWidth="200" onAction="#handlePlay" text="Mode Libre" />
+            <HBox alignment="CENTER">
+                <Button fx:id="buttonModeLife34" minHeight="50" minWidth="200" onAction="#handlePlay" text="Life 3-4" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button fx:id="buttonModePuffeur" minHeight="50" minWidth="200" onAction="#handlePlay" text="Puffeur" />
+            </HBox>
             <HBox alignment="CENTER">
                 <Button fx:id="RetourButton" styleClass="button-gray" minHeight="50" minWidth="200" onAction="#ButtonActionRetour" text="Retour" />
             </HBox>

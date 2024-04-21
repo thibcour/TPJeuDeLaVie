@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import l3.tpjeudelavie.Visiteur.VisiteurDayNight;
 import l3.tpjeudelavie.Visiteur.VisiteurHighLife;
 import l3.tpjeudelavie.Visiteur.VisiteurClassique;
+import l3.tpjeudelavie.Visiteur.VisiteurLife34;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -26,11 +27,14 @@ public class ModeDeJeu {
     public Button VisiteurHighLife;
     public Button buttonModePulsar;
     public Button modeLibreButton;
+    public Button buttonModeLife34;
+    public Button buttonModePuffeur;
     private boolean modeLibre = false;
     public void handlePlay(ActionEvent actionEvent) {
         Button sourceButton = (Button) actionEvent.getSource();
         String mode = "";
         modeLibre = false;
+
         if (sourceButton == VisiteurClassique) {
             mode = "Classique";
         } else if (sourceButton == VisiteurDayNight) {
@@ -41,13 +45,23 @@ public class ModeDeJeu {
             mode = "Gosper Glider Gun";
         } else if (sourceButton == buttonModePulsar) {
             mode = "Pulsar";
-        }if (sourceButton == modeLibreButton) {
+        }else if (sourceButton == buttonModeLife34) {
+            mode = "Life34";
+        } else if (sourceButton == buttonModePuffeur) {
+            mode = "Puffeur";
+        }
+        if (sourceButton == modeLibreButton) {
             mode = "Mode Libre";
         }
         AppContext.setJeuDeLaVie(mode); // Initialize jeuDeLaVie before setting the visitor
         switch (mode) {
             case "DayNight" -> AppContext.getJeuDeLaVie().setVisiteur(new VisiteurDayNight(AppContext.getJeuDeLaVie()));
             case "HighLife" -> AppContext.getJeuDeLaVie().setVisiteur(new VisiteurHighLife(AppContext.getJeuDeLaVie()));
+            case "Life34" -> AppContext.getJeuDeLaVie().setVisiteur(new VisiteurLife34(AppContext.getJeuDeLaVie()));
+            case "Puffeur" -> {
+                AppContext.getJeuDeLaVie().initializeGrilleWithPuffer();
+                AppContext.getJeuDeLaVie().setVisiteur(new VisiteurClassique(AppContext.getJeuDeLaVie()));
+            }
             case "Gosper Glider Gun" -> {
                 AppContext.getJeuDeLaVie().initializeGrilleWithCanons();
                 AppContext.getJeuDeLaVie().setVisiteur(new VisiteurCanon(AppContext.getJeuDeLaVie()));

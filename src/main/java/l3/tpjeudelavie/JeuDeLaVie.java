@@ -31,7 +31,7 @@ public class JeuDeLaVie implements Observable {
     public JeuDeLaVie(int xMax, int yMax, String mode){
         this.xMax = xMax;
         this.yMax = yMax;
-        this.mode = mode; // Ajoutez cette ligne pour stocker le mode
+        this.mode = mode;
         this.visiteur = new VisiteurClassique(this);
         observateurs = new ArrayList<>();
         commandes = new ArrayList<>();
@@ -39,12 +39,13 @@ public class JeuDeLaVie implements Observable {
             initializeGrilleWithCanons();
         } else if (mode.equals("Pulsar")) {
             initializeGrilleWithPulsar();
-        } if (mode.equals("Langton's Ant")) {
+        } else if (mode.equals("Langton's Ant")) {
             initializeGrilleWithLangtonAnt();
-        }if (mode.equals("Mode Libre")) {
+        } else if (mode.equals("Mode Libre")) {
             initializeGrilleModeLibre();
-        }
-        else {
+        } else if (mode.equals("Puffeur")) {
+            initializeGrilleWithPuffer();
+        } else {
             initializeGrille();
         }
     }
@@ -104,6 +105,27 @@ public class JeuDeLaVie implements Observable {
                 }
             }
         }
+    }
+
+    public void initializeGrilleWithPuffer() {
+        System.out.println("--------------------------------Puffer--------------------------------");
+        this.grille = new Cellule[xMax][yMax];
+        for (int i = 0; i < this.xMax; i++) {
+            for (int j = 0; j < this.yMax; j++) {
+                this.grille[i][j] = new Cellule(i, j, CelluleEtatMort.getInstance());
+            }
+        }
+
+        // Configuration d'un puffeur
+        int x = xMax / 2;
+        int y = yMax / 2;
+        this.grille[x][y] = new Cellule(x, y, CelluleEtatVivant.getInstance());
+        this.grille[x+1][y+1] = new Cellule(x+1, y+1, CelluleEtatVivant.getInstance());
+        this.grille[x-2][y+2] = new Cellule(x-2, y+2, CelluleEtatVivant.getInstance());
+        this.grille[x-1][y+2] = new Cellule(x-1, y+2, CelluleEtatVivant.getInstance());
+        this.grille[x][y+2] = new Cellule(x, y+2, CelluleEtatVivant.getInstance());
+        this.grille[x+1][y+2] = new Cellule(x+1, y+2, CelluleEtatVivant.getInstance());
+        this.grille[x+2][y+2] = new Cellule(x+2, y+2, CelluleEtatVivant.getInstance());
     }
 
     public void initializeGrilleWithCanons(){
