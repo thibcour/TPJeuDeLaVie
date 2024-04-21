@@ -45,6 +45,13 @@ public class Cellule{
 
     }
 
+    public void toggle() {
+        if (etat.estVivante()) {
+            meurt();
+        } else {
+            vit();
+        }
+    }
 
     public void accepte(Visiteur visiteur){
         etat.accepte(visiteur, this);

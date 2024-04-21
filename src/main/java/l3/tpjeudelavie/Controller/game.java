@@ -8,7 +8,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.AnchorPane;
 import l3.tpjeudelavie.AppContext;
 import l3.tpjeudelavie.JeuDeLaVie;
 import l3.tpjeudelavie.JeuDeLaVieUI;
@@ -61,17 +60,15 @@ public class game {
 
     public void initialize() {
         System.out.println("Initialisation du contrôleur");
-        this.jeu = new JeuDeLaVie(200, 200);
+        this.jeu = AppContext.getJeuDeLaVie();
         jeuUI = new JeuDeLaVieUI(jeu, gameCanvas, this);
         ObservateurStats stats = new ObservateurStats(jeu, this);
         jeu.attacheObservateur(stats);
 
-        Runnable gameUpdateTask = new Runnable() {
-            @Override
-            public void run() {
-                jeu.calculerGenerationSuivante();
-                jeuUI.draw();
-            }
+
+        Runnable gameUpdateTask = () -> {
+            jeu.calculerGenerationSuivante();
+            jeuUI.draw();
         };
 
         executorService = Executors.newSingleThreadScheduledExecutor();
@@ -94,9 +91,7 @@ public class game {
             }
         });
 
-        gameCanvas.setOnMousePressed(event -> {
-            lastDragPoint = new Point((int) event.getX(), (int) event.getY());
-        });
+        gameCanvas.setOnMousePressed(event -> lastDragPoint = new Point((int) event.getX(), (int) event.getY()));
 
         gameCanvas.setOnMouseDragged(event -> {
             int deltaX = (int) event.getX() - lastDragPoint.x;
@@ -125,23 +120,14 @@ public class game {
 
     }
 
-    public void stop() {
-        if (executorService != null) {
-            executorService.shutdown();
-        }
-    }
-
     public void handlePauseButtonAction(ActionEvent actionEvent) {
         if (pauseButton.getText().equals("Pause")) {
             executorService.shutdownNow();
             pauseButton.setText("Reprendre");
         } else {
-            Runnable gameUpdateTask = new Runnable() {
-                @Override
-                public void run() {
-                    jeu.calculerGenerationSuivante();
-                    jeuUI.draw();
-                }
+            Runnable gameUpdateTask = () -> {
+                jeu.calculerGenerationSuivante();
+                jeuUI.draw();
             };
             executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.scheduleAtFixedRate(gameUpdateTask, 0, jeu.getDelay(), TimeUnit.MILLISECONDS);

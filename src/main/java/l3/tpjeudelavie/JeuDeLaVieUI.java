@@ -2,6 +2,7 @@ package l3.tpjeudelavie;
 
 import javafx.application.Platform;
 import javafx.scene.shape.ArcType;
+import l3.tpjeudelavie.Cellule.Cellule;
 import l3.tpjeudelavie.Controller.game;
 import l3.tpjeudelavie.Observateur.Observateur;
 import javafx.scene.control.*;
@@ -19,10 +20,8 @@ public class JeuDeLaVieUI extends BorderPane implements Observateur {
     private final ComboBox<String> visitorSelector;
     private final Canvas canvas;
     private double zoomFactor = 1.0;
-    private final double zoomMax = 2.0;
-    private final double zoomMin = 0.5;
     private Point zoomPoint;
-
+    private final double cellSize = 10.0;
     public JeuDeLaVieUI(JeuDeLaVie jeu, Canvas canvas, game gameController){ // Modify this line
         this.jeu = jeu;
         this.canvas = canvas;
@@ -59,6 +58,18 @@ public class JeuDeLaVieUI extends BorderPane implements Observateur {
 
         canvas = new Canvas();
         this.setCenter(canvas);
+
+        canvas.setOnMouseClicked(event -> {
+            if (!jeu.running) { // Only allow drawing when the game is paused
+                int x = (int) (event.getX() / cellSize);
+                int y = (int) (event.getY() / cellSize);
+                Cellule cellule = jeu.getGrilleXY(x, y);
+                if (cellule != null) {
+                    cellule.toggle(); // Change the state of the cell
+                    draw(); // Redraw the canvas
+                }
+            }
+        });
     }
 
     @Override
@@ -69,6 +80,8 @@ public class JeuDeLaVieUI extends BorderPane implements Observateur {
 
 
     public void setZoomFactor(double zoomFactor) {
+        double zoomMin = 0.5;
+        double zoomMax = 2.0;
         if (zoomFactor >= zoomMin && zoomFactor <= zoomMax) {
             this.zoomFactor = zoomFactor;
         }
