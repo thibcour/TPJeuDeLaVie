@@ -31,6 +31,7 @@
                 <Slider fx:id="speedSlider" min="10" max="200" value="70" />
                 <Label fx:id="speedLabel" styleClass="subtitle3"/>
                 <Button fx:id="resetZoomButton" minHeight="50" minWidth="200" onAction="#handleResetZoomButtonAction" text="Reset Zoom" />
+                <Button fx:id="RetourButton" styleClass="button-gray" minHeight="50" minWidth="200" onAction="#ButtonActionRetour" text="Retour" />
                 <Button fx:id="quitButton" minHeight="50" minWidth="200" onAction="#handleQuitButtonAction" text="Quitter" />
             </HBox>
         </AnchorPane>

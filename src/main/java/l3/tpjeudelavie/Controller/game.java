@@ -2,11 +2,14 @@ package l3.tpjeudelavie.Controller;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.AnchorPane;
+import l3.tpjeudelavie.AppContext;
 import l3.tpjeudelavie.JeuDeLaVie;
 import l3.tpjeudelavie.JeuDeLaVieUI;
 import l3.tpjeudelavie.Observateur.ObservateurStats;
@@ -14,6 +17,8 @@ import javafx.fxml.FXML;
 import org.springframework.stereotype.Controller;
 
 import java.awt.*;
+import java.io.IOException;
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,7 +48,7 @@ public class game {
 
     public Button resetZoomButton;
 
-    private JeuDeLaVie jeu;
+    public JeuDeLaVie jeu;
 
     private JeuDeLaVieUI jeuUI;
 
@@ -100,7 +105,6 @@ public class game {
             Point zoomPoint = jeuUI.getZoomPoint();
             zoomPoint.translate(-deltaX, -deltaY);
 
-            // Limit the zoom point to the bounds of the game grid
             int minX = (int) (jeu.getXMax() * 0.5 * (1 - 1 / jeuUI.getZoomFactor()));
             int maxX = (int) (jeu.getXMax() * 0.5 * (1 + 1 / jeuUI.getZoomFactor()));
             int minY = (int) (jeu.getYMax() * 0.5 * (1 - 1 / jeuUI.getZoomFactor()));
@@ -128,17 +132,28 @@ public class game {
     }
 
     public void handlePauseButtonAction(ActionEvent actionEvent) {
-        if (this.jeu.running) { // Access 'jeu' using 'this'
-            this.jeu.pause();
-            pauseButton.setText("Resume");
+        if (pauseButton.getText().equals("Pause")) {
+            executorService.shutdownNow();
+            pauseButton.setText("Reprendre");
         } else {
-            this.jeu.start();
+            Runnable gameUpdateTask = new Runnable() {
+                @Override
+                public void run() {
+                    jeu.calculerGenerationSuivante();
+                    jeuUI.draw();
+                }
+            };
+            executorService = Executors.newSingleThreadScheduledExecutor();
+            executorService.scheduleAtFixedRate(gameUpdateTask, 0, jeu.getDelay(), TimeUnit.MILLISECONDS);
             pauseButton.setText("Pause");
         }
     }
 
     public void handleResetButtonAction(ActionEvent actionEvent) {
-        jeu.restart();
+        jeu.initializeGrille();
+        jeuUI.draw();
+        ObservateurStats.reset();
+        updateLabels();
     }
 
     public void handleQuitButtonAction(ActionEvent actionEvent) {
@@ -149,5 +164,18 @@ public class game {
     public void handleResetZoomButtonAction(ActionEvent actionEvent) {
         jeuUI.setZoomFactor(1.0);
         jeuUI.setZoomPoint(new Point(jeu.getXMax() / 2, jeu.getYMax() / 2));
+    }
+
+    public void ButtonActionRetour(ActionEvent actionEvent) {
+        handlePauseButtonAction(actionEvent); // Ajoutez cette ligne pour mettre le jeu en pause
+        try {
+            // Charger le nouveau fichier FXML
+            Parent gameModeRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/FXML/ModeDeJeu.fxml")));
+
+            // Utiliser la scène principale et remplacer le root par le nouveau root
+            AppContext.mainScene.setRoot(gameModeRoot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

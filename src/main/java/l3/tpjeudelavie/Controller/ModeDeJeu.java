@@ -7,7 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import l3.tpjeudelavie.AppContext;
 import org.springframework.stereotype.Controller;
-
+import l3.tpjeudelavie.Visiteur.VisiteurDayNight;
+import l3.tpjeudelavie.Visiteur.VisiteurHighLife;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -16,24 +17,25 @@ import java.util.Objects;
 public class ModeDeJeu {
     @FXML
     public Button playButton;
-    public Button buttonClassique;
-    public Button buttonDayNight;
-    public Button buttonHighLife;
     public Button buttonModeCanon;
+    public Button VisiteurClassique;
+    public Button VisiteurDayNight;
+    public Button VisiteurHighLife;
     @FXML
     private Button RetourButton;
 
     public void handlePlay(ActionEvent actionEvent) {
         Button sourceButton = (Button) actionEvent.getSource();
 
-        if (sourceButton == buttonClassique) {
-
-        } else if (sourceButton == buttonDayNight) {
+        if (sourceButton == VisiteurClassique) {
+            // Code for the Classique button
+        } else if (sourceButton == VisiteurDayNight) {
             // Code for the DayNight button
-        } else if (sourceButton == buttonHighLife) {
-            // Code for the HighLife button
+            AppContext.getJeuDeLaVie().setVisiteur(new VisiteurDayNight(AppContext.getJeuDeLaVie()));
+        } else if (sourceButton == VisiteurHighLife) {
+            AppContext.getJeuDeLaVie().setVisiteur(new VisiteurHighLife(AppContext.getJeuDeLaVie()));
         } else if (sourceButton == buttonModeCanon) {
-            // Code for the ModeCanon button
+
         }
         try {
             // Charger le nouveau fichier FXML

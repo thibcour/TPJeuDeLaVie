@@ -29,6 +29,8 @@ public class JeuDeLaVie implements Observable {
     private double density = 0.5;
     private ScheduledExecutorService executorService;
 
+
+
     public JeuDeLaVie(int xMax, int yMax){
         this.xMax = xMax;
         this.yMax = yMax;

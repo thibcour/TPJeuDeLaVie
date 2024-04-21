@@ -9,6 +9,7 @@ public class VisiteurClassique extends Visiteur{
 
     public VisiteurClassique(JeuDeLaVie jeu){
         super(jeu);
+        System.out.println("--------------------------------VisiteurClassique--------------------------------");
     }
     
     public void visiteCelluleVivante(Cellule cellule){

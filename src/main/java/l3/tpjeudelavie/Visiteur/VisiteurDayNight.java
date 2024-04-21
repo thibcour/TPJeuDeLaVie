@@ -8,6 +8,7 @@ import l3.tpjeudelavie.JeuDeLaVie;
 public class VisiteurDayNight extends Visiteur{
     public VisiteurDayNight(JeuDeLaVie jeu){
         super(jeu);
+        System.out.println("--------------------------------VisiteurDayNight--------------------------------");
     }
 
     public void visiteCelluleVivante(Cellule cellule){

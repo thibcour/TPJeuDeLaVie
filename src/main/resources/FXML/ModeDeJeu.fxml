@@ -17,19 +17,20 @@
     <center>
         <VBox alignment="CENTER" spacing="20.0">
             <HBox alignment="CENTER">
-                <Button fx:id="buttonClassique" minHeight="50" minWidth="200" onAction="#handlePlay" text="Classique" />
+                <Button fx:id="VisiteurClassique" minHeight="50" minWidth="200" onAction="#handlePlay" text="Classique" />
             </HBox>
             <HBox alignment="CENTER">
-                <Button fx:id="buttonDayNight" minHeight="50" minWidth="200" onAction="#handlePlay" text="DayNight" />
+                <Button fx:id="VisiteurDayNight" minHeight="50" minWidth="200" onAction="#handlePlay" text="DayNight" />
             </HBox>
             <HBox alignment="CENTER">
-                <Button fx:id="buttonHighLife" minHeight="50" minWidth="200" onAction="#handlePlay" text="HighLife" />
+                <Button fx:id="VisiteurHighLife" minHeight="50" minWidth="200" onAction="#handlePlay" text="HighLife" />
             </HBox>
             <HBox alignment="CENTER">
                 <Button fx:id="buttonModeCanon" minHeight="50" minWidth="200" onAction="#handlePlay" text="ModeCanon" />
             </HBox>
             <HBox alignment="CENTER">
-                <Button fx:id="RetourButton" styleClass="button-gray" minHeight="50" minWidth="200" onAction="#ButtonActionRetour" text="Retour" />            </HBox>
+                <Button fx:id="RetourButton" styleClass="button-gray" minHeight="50" minWidth="200" onAction="#ButtonActionRetour" text="Retour" />
+            </HBox>
             <Region minHeight="50" />
         </VBox>
     </center>

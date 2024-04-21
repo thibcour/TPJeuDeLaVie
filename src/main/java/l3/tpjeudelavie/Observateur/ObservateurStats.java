@@ -25,7 +25,7 @@ public class ObservateurStats implements Observateur{
         }
         return cpt;
     }
-    public void reset() {
+    public static void reset() {
         num_generation = 0;
     }
 
@@ -36,7 +36,6 @@ public class ObservateurStats implements Observateur{
     @Override
     public void actualise(){
         incrementer_generation();
-
         System.out.println("Generation n°"+num_generation);
         System.out.println("Nombre de cellules vivantes : "+compterCellulesVivantes());
         controller.updateLabels();
